@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: room
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: room
+  template:
+    metadata:
+      labels:
+        app: room
+    spec:
+      securityContext:
+        fsGroup: 1000
+      volumes:
+      - name: app-logs
+        persistentVolumeClaim:
+          claimName: app-logs-pvc
+      containers:
+      - name: room
+        image: singmeychy/roomy-room:1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5003
+        envFrom:
+        - secretRef:
+            name: room-booking-secret
+        - configMapRef:
+            name: room-booking-config
+        env:
+        - name: SERVICE_NAME
+          value: room
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        volumeMounts:
+        - name: app-logs
+          mountPath: /var/log/app
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5003
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5003
+          initialDelaySeconds: 15
+          periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: room
+spec:
+  selector:
+    app: room
+  ports:
+  - port: 5003
+    targetPort: 5003

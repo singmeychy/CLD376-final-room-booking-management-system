@@ -1,0 +1,52 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: roombooking-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: roomy.com
+    http:
+      paths:
+      - path: /reg
+        pathType: Prefix
+        backend:
+          service:
+            name: gateway
+            port:
+              number: 5000
+      - path: /auth
+        pathType: Prefix
+        backend:
+          service:
+            name: gateway
+            port:
+              number: 5000
+      - path: /room
+        pathType: Prefix
+        backend:
+          service:
+            name: gateway
+            port:
+              number: 5000
+      - path: /booking
+        pathType: Prefix
+        backend:
+          service:
+            name: gateway
+            port:
+              number: 5000
+      - path: /payment
+        pathType: Prefix
+        backend:
+          service:
+            name: gateway
+            port:
+              number: 5000
+      - path: /notification
+        pathType: Prefix
+        backend:
+          service:
+            name: gateway
+            port:
+              number: 5000

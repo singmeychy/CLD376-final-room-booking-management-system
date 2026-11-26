@@ -4,6 +4,10 @@ const httpProxy = require('http-proxy');
 const jwt = require('jsonwebtoken');
 
 const app = express();
+const { writeLog, requestLogger } = require('./logger');
+app.use(requestLogger);
+writeLog('room service started');
+
 const proxy = httpProxy.createProxyServer();
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -89,7 +93,7 @@ app.use('/room', authToken,
 // BOOKING
 // Public: shows which booking instance answered (for the load balancer)
 app.get('/booking/health', (req, res) => {
-    req.url = '/health';
+    req.url = '/';
     forward(BOOKING_URL)(req, res);
 });
 

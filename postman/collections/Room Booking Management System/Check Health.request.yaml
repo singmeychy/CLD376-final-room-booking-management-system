@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/booking/health"
+method: GET
+order: 3792

@@ -9,6 +9,10 @@ const PersonModel = require('./person_schema.js');
 const app = express();
 app.use(express.json());
 
+const { writeLog, requestLogger } = require('./logger');
+app.use(requestLogger);
+writeLog('room service started');
+
 const JWT_SECRET = process.env.JWT_SECRET;
 
 app.get('/health', (req, res) => res.json({ status: 'ok', service: 'login' }));

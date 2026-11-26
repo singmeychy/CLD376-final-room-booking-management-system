@@ -1,0 +1,11 @@
+$kind: collection
+variables:
+  - key: baseUrl
+    value: ""
+    disabled: false
+  - key: adminToken
+    value: ""
+    disabled: false
+  - key: userToken
+    secret: true
+    disabled: false

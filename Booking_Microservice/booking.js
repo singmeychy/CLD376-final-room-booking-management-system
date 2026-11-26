@@ -1,10 +1,17 @@
 require('dotenv').config();
+
 const os = require('os');
 const express = require('express');
 const mongoose = require('mongoose');
 const axios = require('axios');
 const app = express();
+
 app.use(express.json());
+
+const { writeLog, requestLogger } = require('./logger');
+app.use(requestLogger);
+writeLog('room service started');
+
 
 const dbconnect = require('./dbconnect.js');
 const RoomBookingModel = require('./booking_schema.js');
@@ -98,6 +105,7 @@ app.post('/bookroom', async (req, res) => {
         booking.paymentStatus = status;
         booking.bookingStatus = status === 'Success' ? 'CONFIRMED' : 'FAILED';
         await booking.save();
+        writeLog(`Booking ${booking._id} ${booking.bookingStatus} (payment ${status}) for user ${userId}, room ${booking.roomNumber}`);
 
         // 6. Notification (a failure here should not undo the booking)
         const message = status === 'Success'
@@ -177,7 +185,7 @@ app.put('/cancelbooking/:id', async (req, res) => {
         }
 
         booking.bookingStatus = 'CANCELLED';
-        await booking.save();
+        writeLog(`Booking ${booking._id} CANCELLED`);
         res.json({ message: 'Booking cancelled', booking });
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -189,6 +197,7 @@ app.delete('/deletebooking/:id', async (req, res) => {
     try {
         const booking = await RoomBookingModel.findByIdAndDelete(req.params.id);
         if (!booking) return res.status(404).json({ message: 'Booking not found' });
+        writeLog(`Booking ${req.params.id} DELETED`);
         res.json({ message: 'Booking record deleted' });
     } catch (err) {
         res.status(500).json({ message: err.message });

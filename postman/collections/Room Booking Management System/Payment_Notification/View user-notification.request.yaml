@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{baseUrl}}/notification/mynotifications"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{userToken}}"
+order: 4000

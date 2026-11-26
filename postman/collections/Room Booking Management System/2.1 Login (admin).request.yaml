@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/auth/login"
+method: POST
+order: 3000

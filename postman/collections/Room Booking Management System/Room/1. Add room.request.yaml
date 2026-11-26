@@ -1,0 +1,23 @@
+$kind: http-request
+url: "{{baseUrl}}/room/addroom"
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"roomNumber\": \"301\",\r
+
+    \    \"type\": \"suite\",\r
+
+    \    \"pricePerNight\": 350,\r
+
+    \    \"capacity\": 4,\r
+
+    \    \"description\": \"Double room with city view\"\r
+
+    }"
+auth:
+  type: bearer
+  credentials:
+    token: "{{adminToken}}"
+order: 1000

@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{baseUrl}}/booking/cancelbooking/<booking _id>"
+method: PUT
+auth:
+  type: bearer
+  credentials:
+    token: "{{adminToken}}"
+order: 4000

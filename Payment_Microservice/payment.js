@@ -2,6 +2,10 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
+const { writeLog, requestLogger } = require('./logger');
+app.use(requestLogger);
+writeLog('room service started');
+
 const dbconnect = require('./dbconnect.js');
 const PaymentModel = require('./payment_schema.js');
 

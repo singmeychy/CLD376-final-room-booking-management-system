@@ -4,6 +4,10 @@ const bcrypt = require('bcryptjs');
 const app = express();
 app.use(express.json());
 
+const { writeLog, requestLogger } = require('./logger');
+app.use(requestLogger);
+writeLog('room service started');
+
 const dbconnect = require('./dbconnect.js');
 const PersonModel = require('./person_schema.js');
 

@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{baseUrl}}/payment/refund/<payment _id>"
+method: PUT
+auth:
+  type: bearer
+  credentials:
+    token: "{{adminToken}}"
+order: 3000

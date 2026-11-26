@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{baseUrl}}/room/updateroom/<room _id>"
+method: PUT
+body:
+  type: json
+  content: "{ \r
+
+    \    \"pricePerNight\": 120, \r
+
+    \    \"description\": \"Updated description\" \r
+
+    }"
+auth:
+  type: bearer
+order: 4000

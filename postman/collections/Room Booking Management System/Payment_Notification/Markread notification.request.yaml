@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{baseUrl}}/notification/markread/<notification _id>"
+method: PUT
+auth:
+  type: bearer
+  credentials:
+    token: "{{userToken}}"
+order: 5792

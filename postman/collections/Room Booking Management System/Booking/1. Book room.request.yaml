@@ -1,0 +1,19 @@
+$kind: http-request
+url: "{{baseUrl}}/booking/bookroom"
+method: POST
+body:
+  type: json
+  content: "{ \r
+
+    \    \"roomId\": \"<room _id>\", \r
+
+    \    \"checkIn\": \"2026-12-25\", \r
+
+    \    \"checkOut\": \"2026-12-27\" \r
+
+    }"
+auth:
+  type: bearer
+  credentials:
+    token: "{{userToken}}"
+order: 1000

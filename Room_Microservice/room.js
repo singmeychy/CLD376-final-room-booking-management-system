@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const app = express();
 app.use(express.json());
 
+const { writeLog, requestLogger } = require('./logger');
+app.use(requestLogger);
+writeLog('room service started');
+
 const dbconnect = require('./dbconnect.js');
 const RoomModel = require('./room_schema.js');
 
@@ -101,8 +105,8 @@ app.get('/viewroom/:id', async (req, res) => {
 // UPDATE ROOM (admin)
 /* 
 {
-  "pricePerNight": 120,
-  "description": "Double room with city view and balcony"
+    "pricePerNight": 120,
+    "description": "Double room with city view and balcony"
 }
   */
 app.put('/updateroom/:id', async (req, res) => {
